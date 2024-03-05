@@ -3,8 +3,10 @@ using EcommerceWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace ECommerceWeb.Net8.Controllers
+namespace ECommerceWeb.Net8.Areas.Customer.Controllers
 {
+
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -1,55 +1,61 @@
 ﻿using EcommerceWeb.Models;
+using EcommerceWebDataAccess.Repository;
+using EcommerceWebDataAccess.Repository.IRepository;
 using ECommerceWebDataAccess.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ECommerceWeb.Net8.Controllers
+namespace ECommerceWeb.Net8.Areas.Admin.Controllers
 {
+
+    [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public CategoryController(ApplicationDbContext db)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _db.Categories.ToList();
+            List<Category> objCategoryList = _unitOfWork.category.GetAll().ToList();
             return View(objCategoryList);
         }
         public IActionResult Create()
-        {         
+        {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create( Category obj)
+        public IActionResult Create(Category obj)
         {
-            if ( obj.Name==obj.DisplayOrder.ToString())
+            if (obj.Name == obj.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("name", "Category Name and Display order should not be same");
             }
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
-                _db.SaveChanges();
+                _unitOfWork.category.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category Created Sucessfully";
                 return RedirectToAction("Index");
             }
             return View();
-           
+
         }
 
         public IActionResult Edit(int? Id)
         {
-            if(Id==null || Id==0)
+            if (Id == null || Id == 0)
             {
                 return NotFound();
             }
-            Category? categoryFromDb= _db.Categories.Find(Id);
+            //   Category? categoryFromDb= _db.Categories.Find(Id);
+            Category? categoryFromDb = _unitOfWork.category.Get(u => u.Id == Id);
+
             //Category? category1 = _db.Categories.FirstOrDefault(u => u.C_Id==Id);
             //Category? category2 = _db.Categories.Where(u => u.C_Id==Id).FirstOrDefault();
 
-            if (categoryFromDb == null )
+            if (categoryFromDb == null)
             {
                 return NotFound();
             }
@@ -58,11 +64,11 @@ namespace ECommerceWeb.Net8.Controllers
         [HttpPost]
         public IActionResult Edit(Category obj)
         {
-            if (ModelState.IsValid )
+            if (ModelState.IsValid)
             {
-           
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+
+                _unitOfWork.category.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category updated Sucessfully";
                 return RedirectToAction("Index");
             }
@@ -75,7 +81,7 @@ namespace ECommerceWeb.Net8.Controllers
             {
                 return NotFound();
             }
-            Category? categoryFromDb = _db.Categories.Find(Id);
+            Category? categoryFromDb = _unitOfWork.category.Get(u => u.Id == Id);
             //Category? category1 = _db.Categories.FirstOrDefault(u => u.C_Id==Id);
             //Category? category2 = _db.Categories.Where(u => u.C_Id==Id).FirstOrDefault();
 
@@ -85,20 +91,20 @@ namespace ECommerceWeb.Net8.Controllers
             }
             return View(categoryFromDb);
         }
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? Id)
         {
-  
-                Category? removeCategory= _db.Categories.Find(Id);
-                if(removeCategory == null )
-                {
-                    return NotFound();
-                }
-                _db.Categories.Remove(removeCategory);
-                _db.SaveChanges();
+
+            Category? removeCategory = _unitOfWork.category.Get(u => u.Id == Id);
+            if (removeCategory == null)
+            {
+                return NotFound();
+            }
+            _unitOfWork.category.Remove(removeCategory);
+            _unitOfWork.Save();
             TempData["success"] = "Category deleted Sucessfully";
             return RedirectToAction("Index");
-      
+
         }
 
     }
