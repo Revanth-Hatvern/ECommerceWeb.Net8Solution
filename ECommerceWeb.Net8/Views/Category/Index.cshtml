@@ -2,13 +2,16 @@
 
 
 <div class="container">
+    <div class="col-12" >
+        <h2 class="text-center text-bg-primary"> Category List</h2>
+    </div>
     <div class="row pt-4 pb-3">
         <div class="col-6">
-            <h2 class="text-primary">
-                Category List
+            <h2 class="text-primary ">
+     
             </h2>
         </div>
-            <div class="col-6 text-end">           
+            <div class="col-6 text-end pb-2">           
                    <a asp-controller="Category" asp-action="Create" class="btn btn-primary" >
                    <i class="bi bi-bag-plus-fill"></i> Add new Category 
                    </a>
@@ -38,10 +41,10 @@
             </td>
             <td>
                 <div class="w-75 btn-group" role="group">
-                <a asp-controller="Category" asp-action="Edit" asp-route-Id="@obj.C_Id" class="btn btn-primary mx-2">
+                <a asp-controller="Category" asp-action="Edit" asp-route-Id="@obj.Id" class="btn btn-primary mx-2">
                     <i class="bi bi-pencil-square"></i>Edit
                 </a>
-                 <a asp-controller="Category" asp-action="Delete" asp-route-Id="@obj.C_Id" class="btn btn-danger mx-2">
+                 <a asp-controller="Category" asp-action="Delete" asp-route-Id="@obj.Id" class="btn btn-danger mx-2">
                                 <i class="bi bi-trash3"></i>Delete
                 </a>
                 </div>

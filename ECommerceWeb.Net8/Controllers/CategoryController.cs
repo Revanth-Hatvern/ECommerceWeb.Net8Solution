@@ -1,5 +1,5 @@
-﻿using ECommerceWeb.Net8.Data;
-using ECommerceWeb.Net8.Models;
+﻿using EcommerceWeb.Models;
+using ECommerceWebDataAccess.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceWeb.Net8.Controllers

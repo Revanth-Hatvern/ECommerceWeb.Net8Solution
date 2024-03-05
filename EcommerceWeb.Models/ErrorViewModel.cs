@@ -1,4 +1,4 @@
-namespace ECommerceWeb.Net8.Models
+namespace EcommerceWeb.Models
 {
     public class ErrorViewModel
     {
