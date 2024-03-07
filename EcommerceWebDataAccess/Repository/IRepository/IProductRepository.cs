@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EcommerceWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace EcommerceWebDataAccess.Repository.IRepository
 {
-    public interface IUnitOfWork
+    public interface IProductRepository :IRepository<Product>
     {
-        ICategoryRepository category { get; }
-
-        IProductRepository product { get; }
-
-        void Save();
+        void Update(Product obj);
     }
 }
