@@ -51,7 +51,7 @@ namespace ECommerceWeb.Net8.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(ProductVM productVM,IFormFile file)
+        public IActionResult Upsert(ProductVM productVM,IFormFile file)
         {
             if (ModelState.IsValid)
             {

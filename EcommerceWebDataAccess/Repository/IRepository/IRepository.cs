@@ -9,7 +9,7 @@ namespace EcommerceWebDataAccess.Repository.IRepository
 {
     public interface IRepository<T> where T : class
     {
-        //T-Category
+        //T-Category T is generic Repository
         IEnumerable<T> GetAll();
 
         T Get(Expression<Func<T, bool>> filter);
